@@ -7,81 +7,54 @@ import java.sql.Statement;
 import models.Course;
 import utils.DatabaseConnection;
 
-public class CourseDao {
-	
-	public void createTable() throws Exception {
-		Connection conn = null;
-		Statement stmt = null;
+public class CourseDao extends BaseDao {
+	private Course course;
+
+	public CourseDao(String tableName) {
+		super(tableName);
+	}
+
+	public void createTable() {
 		try {
 			DatabaseConnection.getInstance().connect();
-			conn = DatabaseConnection.getInstance().getConnection();
-			stmt = conn.createStatement();
+			Connection conn = DatabaseConnection.getInstance().getConnection();
+			Statement stmt = conn.createStatement();
 			String sql = "CREATE TABLE IF NOT EXISTS COURSE" +
 					"(NAME TEXT PRIMARY KEY     NOT NULL," +
 					" CREDITS        INT    NOT NULL)";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			DatabaseConnection.getInstance().disconnect(); 
-		} 
-		finally {
-			try { 
-				DatabaseConnection.getInstance().disconnect(); 
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+		}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 
-	public void dropTable() throws Exception {
-		Connection conn = null;
-		Statement stmt = null;
+	@Override
+	public Object create(Object newObject) {
+		course = (Course) newObject;
 		try {
 			DatabaseConnection.getInstance().connect();
-			conn = DatabaseConnection.getInstance().getConnection();
-			stmt = conn.createStatement();
-			String sql = "DROP TABLE course;";
-			stmt.executeUpdate(sql);
-			stmt.close();
-			DatabaseConnection.getInstance().disconnect(); 
-		} 
-		finally {
-			try { 
-				DatabaseConnection.getInstance().disconnect(); 
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
-	}
-
-	public Course create(Course newCourse) throws Exception {
-		Connection conn = null;
-		try {
-			DatabaseConnection.getInstance().connect();
-			conn = DatabaseConnection.getInstance().getConnection();
+			Connection conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM course WHERE NAME = '" + newCourse.getName() + "';");
-			statement.executeUpdate("INSERT INTO course VALUES ('" + newCourse.getName() + "', '" + newCourse.getCredits() + "');");
-			statement.close();
-			return newCourse;
+			statement.executeUpdate("DELETE FROM course WHERE NAME = '" + course.getName() + "';");
+			statement.executeUpdate("INSERT INTO course VALUES ('" + course.getName() + "', '" + course.getCredits() + "');");
 		} 
-		finally {
-			try { 
-				DatabaseConnection.getInstance().disconnect();  
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+		catch (Exception e) {
+			course = null;
+			e.printStackTrace();
 		}
+		return course;
 	}
 
-	public Course find(String name) {
-		Connection conn = null;
+	@Override
+	public Object find(Object findByObject) {
 		Course course = null;
+		String name = (String) findByObject;
 		try {
 			DatabaseConnection.getInstance().connect();
-			conn = DatabaseConnection.getInstance().getConnection();
+			Connection conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM course WHERE NAME = '" + name + "';");
 			if (!result.next()) return null;
@@ -89,37 +62,26 @@ public class CourseDao {
 			DatabaseConnection.getInstance().disconnect();
 			course = new Course(name, credits);
 		} 
-		catch (Exception ex) {
-			ex.printStackTrace();
-		} 
-		finally {
-			try { 
-				DatabaseConnection.getInstance().disconnect();
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 		return course;
 	}
 
-	public void update(Course newCourse) throws Exception {
-		Connection conn = null;
+	@Override
+	void update(Object newObject) {
+		course = (Course) newObject;
 		try {
 			DatabaseConnection.getInstance().connect();
-			conn = DatabaseConnection.getInstance().getConnection();
+			Connection conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM COURSE WHERE name = '" + newCourse.getName() + "';");
-			statement.executeUpdate("INSERT INTO course VALUES('" + newCourse.getName() + "','" + newCourse.getCredits() + "');");
+			statement.executeUpdate("DELETE FROM COURSE WHERE name = '" + course.getName() + "';");
+			statement.executeUpdate("INSERT INTO course VALUES('" + course.getName() + "','" + course.getCredits() + "');");
 			statement.close();
 		} 
-		finally {
-			try { 
-				DatabaseConnection.getInstance().disconnect();
-			} 
-			catch (Exception e) {
-				e.printStackTrace();
-			}
+
+		catch (Exception e) {
+			e.printStackTrace();
 		}
 	}
 

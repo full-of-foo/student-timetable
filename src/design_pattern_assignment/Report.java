@@ -50,7 +50,7 @@ public class Report {
 		while (enumeration.hasMoreElements()) {
 			Integer offeringId = (Integer)enumeration.nextElement();
 			ArrayList<String> list = (ArrayList<String>)offeringToName.get(offeringId);
-			writeOffering(buffer, list, DAOFactory.getOfferingDao().find(offeringId.intValue()));
+			writeOffering(buffer, list, (Offering) DAOFactory.getOfferingDao().find(offeringId.intValue()));
 		}
 		buffer.append("Number of scheduled offerings: ");
 		buffer.append(offeringToName.size());

@@ -3,14 +3,14 @@ package daos;
 public class DAOFactory {
 	
 	public static CourseDao getCourseDao() {
-		return new CourseDao();
+		return new CourseDao("course");
 	}
 	
 	public static OfferingDao getOfferingDao() {
-		return new OfferingDao();
+		return new OfferingDao("offering");
 	}
 	
 	public static ScheduleDao getScheduleDao() {
-		return new ScheduleDao();
+		return new ScheduleDao("schedule");
 	}
 }

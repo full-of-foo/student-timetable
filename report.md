@@ -15,5 +15,7 @@ Refactors Report
    -> create a DAO factory to return instances of DAOs (https://github.com/full-of-foo/student-timetable/commit/b2fb67e3ba94496c43f5bd7242d866e4f7811e68)
    
 5. Better organise tests
-   -> Create a 'test' source directory to contain tests
-    
+   -> Create a 'test' source directory to contain tests (https://github.com/full-of-foo/student-timetable/commit/5ec35201e9ce60683bf32c6c73e404ee3a357e89)
+   
+6. Extract hierarchy for DAO
+   -> Create 'BaseDAO' abstract class to dry up DAO crud code ()

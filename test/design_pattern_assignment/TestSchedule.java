@@ -121,42 +121,42 @@ public class TestSchedule extends TestCase {
 
 	public void testCourseCreate() throws Exception {
 		courseDao.create(new Course("CS202", 1));
-		Course c = courseDao.find("CS202");
+		Course c = (Course) courseDao.find("CS202");
 		assertEquals("CS202", c.getName());
-		Course c2 = courseDao.find("Nonexistent");
+		Course c2 = (Course) courseDao.find("Nonexistent");
 		assertNull(c2);
 	}
 
 	public void testOfferingCreate() throws Exception {
-		Course c = courseDao.create(new Course("CS202", 2));
-		Offering offering = offeringDao.create(new Offering(c, "M10"));
+		Course c = (Course) courseDao.create(new Course("CS202", 2));
+		Offering offering = (Offering) offeringDao.create(new Offering(c, "M10"));
 		assertNotNull(offering);
 	}
 
 	public void testPersistentSchedule() throws Exception {
 		scheduleDao.create(new Schedule("Bob"));
-		Schedule s = scheduleDao.find("bob");
+		Schedule s = (Schedule) scheduleDao.find("bob");
 		assertNotNull(s);
 	}
 
 	public void testScheduleUpdate() throws Exception {
 		dropTables();
 		createTables();
-		Course cs101 = courseDao.create(new Course("CS101", 3));
-		Offering off1 = offeringDao.create(new Offering(cs101, "M10"));
+		Course cs101 = (Course) courseDao.create(new Course("CS101", 3));
+		Offering off1 = (Offering) offeringDao.create(new Offering(cs101, "M10"));
 		offeringDao.update(off1);
-		Offering off2 = offeringDao.create(new Offering(cs101, "T9"));
+		Offering off2 = (Offering) offeringDao.create(new Offering(cs101, "T9"));
 		offeringDao.update(off2);
-		Schedule s = scheduleDao.create(new Schedule("Bob"));
+		Schedule s = (Schedule) scheduleDao.create(new Schedule("Bob"));
 		s.add(off1);
 		s.add(off2);
 		scheduleDao.update(s);
-		Schedule s2 = scheduleDao.create(new Schedule("Alice"));
+		Schedule s2 = (Schedule) scheduleDao.create(new Schedule("Alice"));
 		s2.add(off1);
 		scheduleDao.update(s2);
-		Schedule s3 =  scheduleDao.find("Bob");
+		Schedule s3 =  (Schedule) scheduleDao.find("Bob");
 		assertEquals(2, s3.schedule.size());
-		Schedule s4 =  scheduleDao.find("Alice");
+		Schedule s4 =  (Schedule) scheduleDao.find("Alice");
 		assertEquals(1, s4.schedule.size());
 	}
 }
