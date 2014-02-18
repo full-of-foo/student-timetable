@@ -20,7 +20,7 @@ public class Report {
 		Collection<Schedule> schedules = DAOFactory.getScheduleDao().all();
 		for (Iterator<Schedule> eachSchedule = schedules.iterator(); eachSchedule.hasNext();) {
 			Schedule schedule = (Schedule) eachSchedule.next();
-			for (Iterator<Offering> each = schedule.schedule.iterator(); each.hasNext(); ) {
+			for (Iterator<Offering> each = schedule.getScheduleList().iterator(); each.hasNext(); ) {
 				Offering offering = (Offering) each.next();
 				populateMapFor(schedule, offering);
 			}

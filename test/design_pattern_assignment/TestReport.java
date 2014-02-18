@@ -44,18 +44,22 @@ public class TestReport extends TestCase {
 		dropTables();
 		createTables();
 		scheduleDao.deleteAll();
+		
 		Course cs101 = (Course) courseDao.create(new Course("CS101", 3));
 		Offering off1 = (Offering) offeringDao.create(new Offering(cs101, "M10"));
 		offeringDao.update(off1);
 		Offering off2 = (Offering) offeringDao.create(new Offering(cs101, "T9"));
 		offeringDao.update(off2);
+		
 		Schedule s = (Schedule) scheduleDao.create(new Schedule("Bob"));
-		s.add(off1);
-		s.add(off2);
+		s.getScheduleList().addOffering(off1);
+		s.getScheduleList().addOffering(off2);
 		scheduleDao.update(s);
+		
 		Schedule s2 = (Schedule) scheduleDao.create(new Schedule("Alice"));
-		s2.add(off1);
+		s2.getScheduleList().addOffering(off1);
 		scheduleDao.update(s2);
+		
 		Report report = new Report();
 		StringBuffer buffer = new StringBuffer();
 		report.write(buffer);

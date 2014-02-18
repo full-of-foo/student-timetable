@@ -98,7 +98,7 @@ public class ScheduleDao extends BaseDao {
 			while (result.next()) {
 				int offeringId = result.getInt("OFFERING_ID");
 				Offering offering = (Offering) DAOFactory.getOfferingDao().find(offeringId);
-				schedule.add(offering);
+				schedule.getScheduleList().addOffering(offering);
 			}
 			statement.close();
 			DatabaseConnection.getInstance().disconnect(); 
@@ -118,8 +118,8 @@ public class ScheduleDao extends BaseDao {
 			Connection conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + schedule.getName() + "';");
-			for (int i = 0; i < schedule.schedule.size(); i++) {
-				Offering offering = (Offering) schedule.schedule.get(i);
+			for (int i = 0; i < schedule.getScheduleList().size(); i++) {
+				Offering offering = (Offering) schedule.getScheduleList().get(i);
 				statement.executeUpdate("INSERT INTO schedule (NAME, OFFERING_ID) VALUES('" + schedule.getName() + "','" + offering.getId() + "');");
 			}
 		} 

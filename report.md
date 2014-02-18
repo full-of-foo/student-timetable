@@ -18,4 +18,4 @@ Refactors Report
    -> Create a 'test' source directory to contain tests (https://github.com/full-of-foo/student-timetable/commit/5ec35201e9ce60683bf32c6c73e404ee3a357e89)
    
 6. Extract hierarchy for DAO
-   -> Create 'BaseDAO' abstract class to dry up DAO crud code ()
+   -> Create 'BaseDAO' abstract class to dry up DAO crud code (https://github.com/full-of-foo/student-timetable/commit/e8460f7d5d3ebbc25c14c2d9d076f1a2694cbd7a)

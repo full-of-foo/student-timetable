@@ -12,7 +12,6 @@ public class Offering {
 	}
 	
 	public Offering(Course course, String daysTimesCsv) {
-		//DAO to handle ID auto increment
 		this.course = course;
 		this.daysTimes = daysTimesCsv;
 	}
@@ -20,13 +19,25 @@ public class Offering {
 	public int getId() {
 		return id;
 	}
+	
+	public void setId(int id) {
+		this.id = id;
+	}
 
 	public Course getCourse() {
 		return course;
 	}
+	
+	public void setCourse(Course course) {
+		this.course = course;
+	}
 
 	public String getDaysTimes() {
 		return daysTimes;
+	}
+	
+	public void setDaysTimes(String daysTimes) {
+		this.daysTimes = daysTimes;
 	}
 
 	public String toString() {
