@@ -4,6 +4,10 @@ import junit.framework.TestCase;
 import java.util.List;
 import java.util.Collection;
 
+import models.Course;
+import models.Offering;
+import models.Schedule;
+
 public class TestSchedule extends TestCase {
 	
 	public TestSchedule(String name) {

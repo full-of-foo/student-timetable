@@ -1,32 +1,25 @@
-package design_pattern_assignment;
+package models;
 import java.util.*;
 import java.sql.*;
 
+import utils.DatabaseConnection;
+
 public class Schedule {
 	
-	String name;
+	private String name;
 	int credits = 0;
 	static final int minCredits = 12;
 	static final int maxCredits = 18;
 	boolean permission = false;
 	
-	ArrayList<Offering> schedule = new ArrayList<Offering>();
-	
-	static String url = "jdbc:postgresql://127.0.0.1:5432/design_patterns_test";
-	static { 
-		try { 
-			Class.forName("org.postgresql.Driver"); 
-		}
-		catch (Exception e) {
-			e.printStackTrace();
-		} 
-	}
+	public ArrayList<Offering> schedule = new ArrayList<Offering>();
 	
 	public static void createTable() throws Exception {
 		Connection c = null;
 	    Statement stmt = null;
 		try {
-			c = DriverManager.getConnection(url, "design_patterns", "");
+			DatabaseConnection.getInstance().connect();
+			c = DatabaseConnection.getInstance().getConnection();
 	        stmt = c.createStatement();
 	         String sql = "CREATE TABLE IF NOT EXISTS SCHEDULE" +
 	                      "(ID SERIAL PRIMARY KEY     NOT NULL," +
@@ -34,30 +27,33 @@ public class Schedule {
 	                      "OFFERING_ID INT references OFFERING(ID))";
 	         stmt.executeUpdate(sql);
 	         stmt.close();
-	         c.close();
+	         DatabaseConnection.getInstance().disconnect();
 		} 
 		finally {
 			try { 
-				c.close(); 
+		         DatabaseConnection.getInstance().disconnect();
 			} 
-			catch (Exception ignored) {}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public static void dropTable() throws Exception {
-		Connection c = null;
+		Connection conn = null;
 	    Statement stmt = null;
 		try {
-			c = DriverManager.getConnection(url, "design_patterns", "");
-	        stmt = c.createStatement();
-	         String sql = "DROP TABLE schedule;";
-	         stmt.executeUpdate(sql);
-	         stmt.close();
-	         c.close();
+			DatabaseConnection.getInstance().connect();
+			conn = DatabaseConnection.getInstance().getConnection();
+	        stmt = conn.createStatement();
+			String sql = "DROP TABLE schedule;";
+			stmt.executeUpdate(sql);
+			stmt.close();
+			DatabaseConnection.getInstance().disconnect(); 
 		} 
 		finally {
 			try { 
-				c.close(); 
+				DatabaseConnection.getInstance().disconnect(); 
 			} 
 			catch (Exception ignored) {}
 		}
@@ -66,65 +62,82 @@ public class Schedule {
 	public static void deleteAll() throws Exception {
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(url, "design_patterns", "");
+			DatabaseConnection.getInstance().connect();
+			conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate("DELETE FROM schedule;");
+			statement.close();
+			DatabaseConnection.getInstance().disconnect(); 
 		} 
 		finally {
 			try { 
-				conn.close(); 
+				DatabaseConnection.getInstance().disconnect(); 
 			} 
-			catch (Exception ignored) {}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public static Schedule create(String name) throws Exception {
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(url, "design_patterns", "");
+			DatabaseConnection.getInstance().connect();
+			conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
 			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + name + "';");
 			statement.executeUpdate("INSERT INTO schedule (NAME) VALUES ('" + name +"')");
+			statement.close();
+			DatabaseConnection.getInstance().disconnect(); 
 			return new Schedule(name);
 		} 
 		finally {
 			try { 
-				conn.close(); 
+				DatabaseConnection.getInstance().disconnect(); 
 			} 
-			catch (Exception ignored) {}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 	
 	public static Schedule find(String name) {
 		Connection conn = null;
+		Schedule schedule = null;
 		try {
-			conn = DriverManager.getConnection(url, "design_patterns", "");
+			DatabaseConnection.getInstance().connect();
+			conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet result = statement.executeQuery("SELECT * FROM schedule WHERE Name= '" + name + "';");
-			Schedule schedule = new Schedule(name);
+			schedule = new Schedule(name);
 			while (result.next()) {
 				int offeringId = result.getInt("OFFERING_ID");
 				Offering offering = Offering.find(offeringId);
 				schedule.add(offering);
 			}
-			return schedule;
+			statement.close();
+			DatabaseConnection.getInstance().disconnect(); 
 		} 
-		catch (Exception ex) {
-			return null;
+		catch (Exception e) {
+			e.printStackTrace();
 		} 
 		finally {
 			try { 
-				conn.close(); 
+				DatabaseConnection.getInstance().disconnect(); 
 			} 
-			catch (Exception ignored) {}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
+		return schedule;
 	}
 
 	public static Collection<Schedule> all() throws Exception {
 		ArrayList<Schedule> result = new ArrayList<Schedule>();
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(url, "design_patterns", "");
+			DatabaseConnection.getInstance().connect();
+			conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
 			ResultSet results = statement.executeQuery("SELECT DISTINCT NAME FROM schedule;");
 			while (results.next())
@@ -134,7 +147,9 @@ public class Schedule {
 			try { 
 				conn.close(); 
 			} 
-			catch (Exception ignored) {}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 		return result;
 	}
@@ -142,24 +157,27 @@ public class Schedule {
 	public void update() throws Exception {
 		Connection conn = null;
 		try {
-			conn = DriverManager.getConnection(url, "design_patterns", "");
+			DatabaseConnection.getInstance().connect();
+			conn = DatabaseConnection.getInstance().getConnection();
 			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + name + "';");
+			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + getName() + "';");
 			for (int i = 0; i < schedule.size(); i++) {
 				Offering offering = (Offering) schedule.get(i);
-				statement.executeUpdate("INSERT INTO schedule (NAME, OFFERING_ID) VALUES('" + name + "','" + offering.getId() + "');");
+				statement.executeUpdate("INSERT INTO schedule (NAME, OFFERING_ID) VALUES('" + getName() + "','" + offering.getId() + "');");
 			}
 		} 
 		finally {
 			try { 
-				conn.close(); 
+				DatabaseConnection.getInstance().disconnect(); 
 			} 
-			catch (Exception ignored) {}
+			catch (Exception e) {
+				e.printStackTrace();
+			}
 		}
 	}
 
 	public Schedule(String name) {
-		this.name = name;
+		this.setName(name);
 	}
 
 	public void add(Offering offering) {
@@ -208,6 +226,14 @@ public class Schedule {
 	}
 
 	public String toString() {
-		return "Schedule " + name + ": " + schedule;
+		return "Schedule " + getName() + ": " + schedule;
+	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
 	}
 }

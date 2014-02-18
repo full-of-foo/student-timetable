@@ -1,6 +1,9 @@
 package design_pattern_assignment;
 import java.util.*;
 
+import models.Offering;
+import models.Schedule;
+
 public class Report {
 	
 	public Report() {
@@ -25,7 +28,7 @@ public class Report {
 			list = new ArrayList<String>();
 			offeringToName.put(new Integer(offering.getId()), list);
 		}
-		list.add(schedule.name);
+		list.add(schedule.getName());
 	}
 
 	public void writeOffering(StringBuffer buffer, ArrayList<String> list, Offering offering) {

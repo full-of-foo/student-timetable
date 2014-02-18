@@ -1,4 +1,7 @@
 package design_pattern_assignment;
+import models.Course;
+import models.Offering;
+import models.Schedule;
 import junit.framework.TestCase;
 
 public class TestReport extends TestCase {
