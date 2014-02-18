@@ -17,13 +17,13 @@ public class TestReport extends TestCase {
 		super(name); 
 	}
 	
-	private void createTables() throws Exception {
+	public void createTables() throws Exception {
 		courseDao.createTable();
 		offeringDao.createTable();
 		scheduleDao.createTable();
 	}
 	
-	private void dropTables() throws Exception {
+	public void dropTables() throws Exception {
 		scheduleDao.dropTable();
 		offeringDao.dropTable();
 		courseDao.dropTable();

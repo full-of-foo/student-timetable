@@ -12,5 +12,8 @@ Refactors Report
    -> pass model objects to 'create' and 'update' rather than primitive attributes (https://github.com/full-of-foo/student-timetable/commit/9c7c4e3cd3cab6f4306fddeb132e78d9baa2dcc7)
    
 4. DAO factory pattern - encapsulate the similar DAO behaviour with a factory
-   -> create a DAO factory to return instances of DAOs ()
+   -> create a DAO factory to return instances of DAOs (https://github.com/full-of-foo/student-timetable/commit/b2fb67e3ba94496c43f5bd7242d866e4f7811e68)
+   
+5. Better organise tests
+   -> Create a 'test' source directory to contain tests
     
