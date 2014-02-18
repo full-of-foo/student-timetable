@@ -10,7 +10,7 @@ import utils.DatabaseConnection;
 
 public class OfferingDao {
 	
-	public static void createTable() throws Exception {
+	public void createTable() throws Exception {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -35,7 +35,7 @@ public class OfferingDao {
 		}
 	}
 
-	public static void dropTable() throws Exception {
+	public void dropTable() throws Exception {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -58,7 +58,7 @@ public class OfferingDao {
 	}
 
 
-	public static Offering create(Offering newOffering) throws Exception {
+	public Offering create(Offering newOffering) throws Exception {
 		Connection conn = null;
 		try {
 			DatabaseConnection.getInstance().connect();
@@ -81,7 +81,7 @@ public class OfferingDao {
 		}
 	}
 
-	public static Offering find(int id) {
+	public Offering find(int id) {
 		Connection conn = null;
 		Offering offering = null;
 		try {
@@ -92,7 +92,7 @@ public class OfferingDao {
 			if (result.next() == false)
 				return null;
 			String courseName = result.getString("COURSE_NAME");
-			Course course = CourseDao.find(courseName);
+			Course course = DAOFactory.getCourseDao().find(courseName);
 			String dateTime = result.getString("DAYSTIMES");
 			DatabaseConnection.getInstance().disconnect();
 			offering = new Offering(id, course, dateTime);
@@ -108,7 +108,7 @@ public class OfferingDao {
 		return offering;
 	}
 
-	public static void update(Offering newOffering) throws Exception {
+	public void update(Offering newOffering) throws Exception {
 		Connection conn = null;
 		try {
 			DatabaseConnection.getInstance().connect();

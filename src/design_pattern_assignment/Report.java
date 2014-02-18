@@ -1,10 +1,13 @@
 package design_pattern_assignment;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Enumeration;
+import java.util.Hashtable;
+import java.util.Iterator;
 
-import daos.OfferingDao;
-import daos.ScheduleDao;
 import models.Offering;
 import models.Schedule;
+import daos.DAOFactory;
 
 public class Report {
 	
@@ -14,7 +17,7 @@ public class Report {
 	Hashtable<Integer, ArrayList<String>> offeringToName = new Hashtable<Integer, ArrayList<String>>();
 
 	public void populateMap() throws Exception {
-		Collection<Schedule> schedules = ScheduleDao.all();
+		Collection<Schedule> schedules = DAOFactory.getScheduleDao().all();
 		for (Iterator<Schedule> eachSchedule = schedules.iterator(); eachSchedule.hasNext();) {
 			Schedule schedule = (Schedule) eachSchedule.next();
 			for (Iterator<Offering> each = schedule.schedule.iterator(); each.hasNext(); ) {
@@ -47,7 +50,7 @@ public class Report {
 		while (enumeration.hasMoreElements()) {
 			Integer offeringId = (Integer)enumeration.nextElement();
 			ArrayList<String> list = (ArrayList<String>)offeringToName.get(offeringId);
-			writeOffering(buffer, list, OfferingDao.find(offeringId.intValue()));
+			writeOffering(buffer, list, DAOFactory.getOfferingDao().find(offeringId.intValue()));
 		}
 		buffer.append("Number of scheduled offerings: ");
 		buffer.append(offeringToName.size());

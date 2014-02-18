@@ -12,7 +12,7 @@ import utils.DatabaseConnection;
 
 public class ScheduleDao {
 	
-	public static void createTable() throws Exception {
+	public void createTable() throws Exception {
 		Connection c = null;
 		Statement stmt = null;
 		try {
@@ -37,7 +37,7 @@ public class ScheduleDao {
 		}
 	}
 
-	public static void dropTable() throws Exception {
+	public void dropTable() throws Exception {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -57,7 +57,7 @@ public class ScheduleDao {
 		}
 	}
 
-	public static void deleteAll() throws Exception {
+	public void deleteAll() throws Exception {
 		Connection conn = null;
 		try {
 			DatabaseConnection.getInstance().connect();
@@ -77,7 +77,7 @@ public class ScheduleDao {
 		}
 	}
 
-	public static Schedule create(Schedule newSchedule) throws Exception {
+	public Schedule create(Schedule newSchedule) throws Exception {
 		Connection conn = null;
 		try {
 			DatabaseConnection.getInstance().connect();
@@ -99,7 +99,7 @@ public class ScheduleDao {
 		}
 	}
 
-	public static Schedule find(String name) {
+	public Schedule find(String name) {
 		Connection conn = null;
 		Schedule schedule = null;
 		try {
@@ -110,7 +110,7 @@ public class ScheduleDao {
 			schedule = new Schedule(name);
 			while (result.next()) {
 				int offeringId = result.getInt("OFFERING_ID");
-				Offering offering = OfferingDao.find(offeringId);
+				Offering offering = DAOFactory.getOfferingDao().find(offeringId);
 				schedule.add(offering);
 			}
 			statement.close();
@@ -130,7 +130,7 @@ public class ScheduleDao {
 		return schedule;
 	}
 
-	public static Collection<Schedule> all() throws Exception {
+	public Collection<Schedule> all() throws Exception {
 		ArrayList<Schedule> result = new ArrayList<Schedule>();
 		Connection conn = null;
 		try {
@@ -139,7 +139,7 @@ public class ScheduleDao {
 			Statement statement = conn.createStatement();
 			ResultSet results = statement.executeQuery("SELECT DISTINCT NAME FROM schedule;");
 			while (results.next())
-				result.add(ScheduleDao.find(results.getString("NAME")));
+				result.add(this.find(results.getString("NAME")));
 		} 
 		finally {
 			try { 
@@ -152,7 +152,7 @@ public class ScheduleDao {
 		return result;
 	}
 
-	public static void update(Schedule newSchedule) throws Exception {
+	public void update(Schedule newSchedule) throws Exception {
 		Connection conn = null;
 		try {
 			DatabaseConnection.getInstance().connect();

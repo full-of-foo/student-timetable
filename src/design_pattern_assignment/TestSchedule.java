@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Collection;
 
 import daos.CourseDao;
+import daos.DAOFactory;
 import daos.OfferingDao;
 import daos.ScheduleDao;
 import models.Course;
@@ -12,21 +13,24 @@ import models.Offering;
 import models.Schedule;
 
 public class TestSchedule extends TestCase {
+	private CourseDao courseDao = DAOFactory.getCourseDao();
+	private OfferingDao offeringDao = DAOFactory.getOfferingDao();
+	private ScheduleDao scheduleDao = DAOFactory.getScheduleDao();
 	
 	public TestSchedule(String name) {
 		super(name);
 	}
 	
 	private void createTables() throws Exception {
-		CourseDao.createTable();
-		OfferingDao.createTable();
-		ScheduleDao.createTable();
+		courseDao.createTable();
+		offeringDao.createTable();
+		scheduleDao.createTable();
 	}
 	
 	private void dropTables() throws Exception {
-		ScheduleDao.dropTable();
-		OfferingDao.dropTable();
-		CourseDao.dropTable();
+		scheduleDao.dropTable();
+		offeringDao.dropTable();
+		courseDao.dropTable();
 	}
 
 
@@ -116,43 +120,43 @@ public class TestSchedule extends TestCase {
 	}
 
 	public void testCourseCreate() throws Exception {
-		CourseDao.create(new Course("CS202", 1));
-		Course c = CourseDao.find("CS202");
+		courseDao.create(new Course("CS202", 1));
+		Course c = courseDao.find("CS202");
 		assertEquals("CS202", c.getName());
-		Course c2 = CourseDao.find("Nonexistent");
+		Course c2 = courseDao.find("Nonexistent");
 		assertNull(c2);
 	}
 
 	public void testOfferingCreate() throws Exception {
-		Course c = CourseDao.create(new Course("CS202", 2));
-		Offering offering = OfferingDao.create(new Offering(c, "M10"));
+		Course c = courseDao.create(new Course("CS202", 2));
+		Offering offering = offeringDao.create(new Offering(c, "M10"));
 		assertNotNull(offering);
 	}
 
 	public void testPersistentSchedule() throws Exception {
-		ScheduleDao.create(new Schedule("Bob"));
-		Schedule s = ScheduleDao.find("bob");
+		scheduleDao.create(new Schedule("Bob"));
+		Schedule s = scheduleDao.find("bob");
 		assertNotNull(s);
 	}
 
 	public void testScheduleUpdate() throws Exception {
 		dropTables();
 		createTables();
-		Course cs101 = CourseDao.create(new Course("CS101", 3));
-		Offering off1 = OfferingDao.create(new Offering(cs101, "M10"));
-		OfferingDao.update(off1);
-		Offering off2 = OfferingDao.create(new Offering(cs101, "T9"));
-		OfferingDao.update(off2);
-		Schedule s = ScheduleDao.create(new Schedule("Bob"));
+		Course cs101 = courseDao.create(new Course("CS101", 3));
+		Offering off1 = offeringDao.create(new Offering(cs101, "M10"));
+		offeringDao.update(off1);
+		Offering off2 = offeringDao.create(new Offering(cs101, "T9"));
+		offeringDao.update(off2);
+		Schedule s = scheduleDao.create(new Schedule("Bob"));
 		s.add(off1);
 		s.add(off2);
-		ScheduleDao.update(s);
-		Schedule s2 = ScheduleDao.create(new Schedule("Alice"));
+		scheduleDao.update(s);
+		Schedule s2 = scheduleDao.create(new Schedule("Alice"));
 		s2.add(off1);
-		ScheduleDao.update(s2);
-		Schedule s3 =  ScheduleDao.find("Bob");
+		scheduleDao.update(s2);
+		Schedule s3 =  scheduleDao.find("Bob");
 		assertEquals(2, s3.schedule.size());
-		Schedule s4 =  ScheduleDao.find("Alice");
+		Schedule s4 =  scheduleDao.find("Alice");
 		assertEquals(1, s4.schedule.size());
 	}
 }

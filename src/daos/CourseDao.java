@@ -9,7 +9,7 @@ import utils.DatabaseConnection;
 
 public class CourseDao {
 	
-	public static void createTable() throws Exception {
+	public void createTable() throws Exception {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -33,7 +33,7 @@ public class CourseDao {
 		}
 	}
 
-	public static void dropTable() throws Exception {
+	public void dropTable() throws Exception {
 		Connection conn = null;
 		Statement stmt = null;
 		try {
@@ -55,7 +55,7 @@ public class CourseDao {
 		}
 	}
 
-	public static Course create(Course newCourse) throws Exception {
+	public Course create(Course newCourse) throws Exception {
 		Connection conn = null;
 		try {
 			DatabaseConnection.getInstance().connect();
@@ -76,7 +76,7 @@ public class CourseDao {
 		}
 	}
 
-	public static Course find(String name) {
+	public Course find(String name) {
 		Connection conn = null;
 		Course course = null;
 		try {
