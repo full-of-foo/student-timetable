@@ -4,6 +4,9 @@ import junit.framework.TestCase;
 import java.util.List;
 import java.util.Collection;
 
+import daos.CourseDao;
+import daos.OfferingDao;
+import daos.ScheduleDao;
 import models.Course;
 import models.Offering;
 import models.Schedule;
@@ -15,15 +18,15 @@ public class TestSchedule extends TestCase {
 	}
 	
 	private void createTables() throws Exception {
-		Course.createTable();
-		Offering.createTable();
-		Schedule.createTable();
+		CourseDao.createTable();
+		OfferingDao.createTable();
+		ScheduleDao.createTable();
 	}
 	
 	private void dropTables() throws Exception {
-		Schedule.dropTable();
-		Offering.dropTable();
-		Course.dropTable();
+		ScheduleDao.dropTable();
+		OfferingDao.dropTable();
+		CourseDao.dropTable();
 	}
 
 
@@ -113,43 +116,43 @@ public class TestSchedule extends TestCase {
 	}
 
 	public void testCourseCreate() throws Exception {
-		Course c = Course.create("CS202", 1);
-		Course c2 = Course.find("CS202");
-		assertEquals("CS202", c2.getName());
-		Course c3 = Course.find("Nonexistent");
-		assertNull(c3);
+		CourseDao.create(new Course("CS202", 1));
+		Course c = CourseDao.find("CS202");
+		assertEquals("CS202", c.getName());
+		Course c2 = CourseDao.find("Nonexistent");
+		assertNull(c2);
 	}
 
 	public void testOfferingCreate() throws Exception {
-		Course c = Course.create("CS202", 2);
-		Offering offering = Offering.create(c, "M10");
+		Course c = CourseDao.create(new Course("CS202", 2));
+		Offering offering = OfferingDao.create(new Offering(c, "M10"));
 		assertNotNull(offering);
 	}
 
 	public void testPersistentSchedule() throws Exception {
-		Schedule s = Schedule.create("Bob");
+		ScheduleDao.create(new Schedule("Bob"));
+		Schedule s = ScheduleDao.find("bob");
 		assertNotNull(s);
 	}
 
 	public void testScheduleUpdate() throws Exception {
 		dropTables();
 		createTables();
-		Course cs101 = Course.create("CS101", 3);
-		cs101.update();
-		Offering off1 = Offering.create(cs101, "M10");
-		off1.update();
-		Offering off2 = Offering.create(cs101, "T9");
-		off2.update();
-		Schedule s = Schedule.create("Bob");
+		Course cs101 = CourseDao.create(new Course("CS101", 3));
+		Offering off1 = OfferingDao.create(new Offering(cs101, "M10"));
+		OfferingDao.update(off1);
+		Offering off2 = OfferingDao.create(new Offering(cs101, "T9"));
+		OfferingDao.update(off2);
+		Schedule s = ScheduleDao.create(new Schedule("Bob"));
 		s.add(off1);
 		s.add(off2);
-		s.update();
-		Schedule s2 = Schedule.create("Alice");
+		ScheduleDao.update(s);
+		Schedule s2 = ScheduleDao.create(new Schedule("Alice"));
 		s2.add(off1);
-		s2.update();
-		Schedule s3 = Schedule.find("Bob");
+		ScheduleDao.update(s2);
+		Schedule s3 =  ScheduleDao.find("Bob");
 		assertEquals(2, s3.schedule.size());
-		Schedule s4 = Schedule.find("Alice");
+		Schedule s4 =  ScheduleDao.find("Alice");
 		assertEquals(1, s4.schedule.size());
 	}
 }
