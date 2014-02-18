@@ -1,5 +1,6 @@
 package design_pattern_assignment;
 import junit.framework.TestCase;
+
 import java.util.List;
 import java.util.Collection;
 
@@ -8,6 +9,19 @@ public class TestSchedule extends TestCase {
 	public TestSchedule(String name) {
 		super(name);
 	}
+	
+	private void createTables() throws Exception {
+		Course.createTable();
+		Offering.createTable();
+		Schedule.createTable();
+	}
+	
+	private void dropTables() throws Exception {
+		Schedule.dropTable();
+		Offering.dropTable();
+		Course.dropTable();
+	}
+
 
 	public void testMinCredits() {
 		Schedule schedule = new Schedule("name");
@@ -114,6 +128,8 @@ public class TestSchedule extends TestCase {
 	}
 
 	public void testScheduleUpdate() throws Exception {
+		dropTables();
+		createTables();
 		Course cs101 = Course.create("CS101", 3);
 		cs101.update();
 		Offering off1 = Offering.create(cs101, "M10");

@@ -1,7 +1,4 @@
 package design_pattern_assignment;
-import java.util.List;
-import java.util.Collection;
-
 import junit.framework.TestCase;
 
 public class TestReport extends TestCase {
@@ -10,7 +7,22 @@ public class TestReport extends TestCase {
 		super(name); 
 	}
 	
+	private void createTables() throws Exception {
+		Course.createTable();
+		Offering.createTable();
+		Schedule.createTable();
+	}
+	
+	private void dropTables() throws Exception {
+		Schedule.dropTable();
+		Offering.dropTable();
+		Course.dropTable();
+	}
+
+	
 	public void testEmptyReport() throws Exception {
+		dropTables();
+		createTables();
 		Schedule.deleteAll();
 		Report report = new Report();
 		StringBuffer buffer = new StringBuffer();
@@ -19,6 +31,8 @@ public class TestReport extends TestCase {
 	}
 	
 	public void testReport() throws Exception {
+		dropTables();
+		createTables();
 		Schedule.deleteAll();
 		Course cs101 = Course.create("CS101", 3);
 		cs101.update();
@@ -38,11 +52,8 @@ public class TestReport extends TestCase {
 		report.write(buffer);
 		String result = buffer.toString();
 		String valid1 = "CS101 M10\n\tAlice\n\tBob\n" + "CS101 T9\n\tBob\n" + "Number of scheduled offerings: 2\n";
-		String valid2 = "CS101 T9\n\tBob\n" + "CS101 M10\n\tAlice\n\tBob\n" + "Number of scheduled offerings: 2\n";
+		String valid2 = "CS101 T9\n\tBob\n" + "CS101 M10\n\tBob\n\tAlice\n" + "Number of scheduled offerings: 2\n";
 		assertTrue(result.equals(valid1) || result.equals(valid2));
 	}
 
-	public static void main(String[] args) {
-		
-	}
 }
