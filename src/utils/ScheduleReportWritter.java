@@ -6,7 +6,6 @@ import java.util.Hashtable;
 import java.util.Iterator;
 
 import models.Offering;
-import controllers.ScheduleReportManager;
 import daos.DAOFactory;
 
 public class ScheduleReportWritter {

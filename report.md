@@ -23,4 +23,9 @@ Refactors Report
 7. Implement POJO pattern for models and define a ScheduleArrayList
    -> Implement Course, Schedule and Offering as a POJO classes and extract Schedule list logic to an implementation of ArrayList (https://github.com/full-of-foo/student-timetable/commit/a9d9f080a759c24ebbce94b58c3c36cf9cd9519f)
    
-8. ?
+8. Extract report to be non-persistent model
+  -> Move reporting logic to a report manager and report writer and create model (https://github.com/full-of-foo/student-timetable/commit/cfea2b670e219497db1de3eed5fac105babb29b2)
+  
+9. Implement MVC pattern for generating reports
+  -> Create Report controller and view, add reportLabel and generateReportButton to view and bind touchEvent to button which adds the reportText to the label 
+  (https://github.com/full-of-foo/student-timetable/commit/cfea2b670e219497db1de3eed5fac105babb29b2)
