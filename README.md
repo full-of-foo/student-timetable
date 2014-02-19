@@ -1,38 +1,40 @@
-student-timetable
+Refactors Report
 =================
 
-A Course is a class that could be offered. 
-An Offering is a version of a class, taught on some schedule. 
-DaysTimes is a comma-separated string of days and times (“M10,T11,F10”).
-A Schedule is a particular set of offerings that a student has chosen. 
-
-There are business rules about how schedules can be formed:
-
-•	All students must take at least 12 credits worth of courses.
-•	No student may take more than 18 credits, unless explicit permission is given.
-•	No two offerings that a student may take can be in the same timeslot.
-•	All courses must be unique.
-
-These business rules are not enforced by the database, but by a set of Java classes that interact with the database and check the schedules that students select to ensure conformance with the business rules. 
-There are three classes which correspond to the database tables, along with a report class and two test classes
-
-You should examine the code in these classes for possible "bad smells" which might be alleviated by refactoring. A catalogue of bad smells and examples of how to restructure code to eliminate smells can be found at http://sourcemaking.com/refactoring .
-
-Your deliverable should consist of the following:
-
-•	a report describing the series of refactorings you applied to the code. For each refactoring, you should explain why and how you decided to apply the refactoring and present the relevant code before and after the refactoring
-•	the final set of refactored classes
-•	a repository showing the progress of your work
-
-Apply refactoring to a set of classes interacting with an underlying database, making use of JUnit for unit testing where necessary and Git for version control.
-
-Document the refactorings that you apply to the code, justifying the use of each refactoring.
-
-Submit:
-
-the refactored classes
-the report describing the refactorings applied
-a repository showing the progress made during refactoring
-Deadline: Thursday 20th February, midnight
-
-
+1. Singleton pattern for DB connection - dry up entity classes by abstracting DB related operations
+   -> add postgres set up and get tests passing (https://github.com/full-of-foo/student-timetable/commit/349f086c95956826558e612dfe101324164613f3)
+   -> move entities to 'models' package and implement DB connection as singleton (https://github.com/full-of-foo/student-timetable/commit/c3db86f05269eb0afb4327854c59c85ceca5d7bb)  
+   
+2. DAO pattern - dry up entity classes by abstracting DB related operations
+   -> create 'daos' package and abstract model CRUD behaviour into independent DAO objects (https://github.com/full-of-foo/student-timetable/commit/9c7c4e3cd3cab6f4306fddeb132e78d9baa2dcc7)
+   
+3. Remove 'Primitive obsession' in DAO layer
+   -> pass model objects to 'create' and 'update' rather than primitive attributes (https://github.com/full-of-foo/student-timetable/commit/9c7c4e3cd3cab6f4306fddeb132e78d9baa2dcc7)
+   
+4. DAO factory pattern - encapsulate the similar DAO behaviour with a factory
+   -> create a DAO factory to return instances of DAOs (https://github.com/full-of-foo/student-timetable/commit/b2fb67e3ba94496c43f5bd7242d866e4f7811e68)
+   
+5. Better organise tests
+   -> Create a 'test' source directory to contain tests (https://github.com/full-of-foo/student-timetable/commit/5ec35201e9ce60683bf32c6c73e404ee3a357e89)
+   
+6. Extract hierarchy for DAO
+   -> Create 'BaseDAO' abstract class to dry up DAO crud code (https://github.com/full-of-foo/student-timetable/commit/e8460f7d5d3ebbc25c14c2d9d076f1a2694cbd7a)
+   
+7. Implement POJO pattern for models and define a ScheduleArrayList
+   -> Implement Course, Schedule and Offering as a POJO classes and extract Schedule list logic to an implementation of ArrayList (https://github.com/full-of-foo/student-timetable/commit/a9d9f080a759c24ebbce94b58c3c36cf9cd9519f)
+   
+8. Extract report to be non-persistent model
+  -> Move reporting logic to a report manager and report writer and create model (https://github.com/full-of-foo/student-timetable/commit/cfea2b670e219497db1de3eed5fac105babb29b2)
+  
+9. Implement MVC pattern for generating reports
+  -> Create Report controller and view, add reportLabel and generateReportButton to view and bind touchEvent to button which adds the reportText to the label 
+  (https://github.com/full-of-foo/student-timetable/commit/cfea2b670e219497db1de3eed5fac105babb29b2)
+  
+10. Extract hierarchy for tests
+  -> Create 'BaseTest' superclass to encapsulate the creating, tearing of tables and seeding of data (https://github.com/full-of-foo/student-timetable/commit/d595db5933b13790be4b2c425dfd163e578cd709)
+  
+11. Consistent variable naming
+  -> Ensure consistent naming convention used across all classes (https://github.com/full-of-foo/student-timetable/commit/7280eeaadb571830d90c3054a7ddabc9e4b2045a)
+  
+12. Comment classes
+  -> Adding JSE standard commenting (https://github.com/full-of-foo/student-timetable/commit/0ed0edb261dfc046d2f10c4685605359f11b27f6)
