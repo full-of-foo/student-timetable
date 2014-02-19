@@ -8,6 +8,12 @@ import models.Course;
 import models.Offering;
 import utils.DatabaseConnection;
 
+/**
+ * OfferingDao --- BaseDao subclass that
+ * implements CRUDs on Offering models
+ *   
+ * @author       Anthony Troy
+ */
 public class OfferingDao extends BaseDao {
 	private Offering offering;
 

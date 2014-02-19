@@ -4,6 +4,13 @@ import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 
+/**
+ * DatabaseConnection --- singleton class
+ * responsible for connecting and disconnecting
+ * to a set database
+ *   
+ * @author       Anthony Troy
+ */
 public class DatabaseConnection {
 	private static DatabaseConnection instance = new DatabaseConnection();
 	private static String url = "jdbc:postgresql://127.0.0.1:5432/design_patterns_test";

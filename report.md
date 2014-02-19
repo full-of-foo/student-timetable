@@ -32,3 +32,9 @@ Refactors Report
   
 10. Extract hierarchy for tests
   -> Create 'BaseTest' superclass to encapsulate the creating, tearing of tables and seeding of data (https://github.com/full-of-foo/student-timetable/commit/d595db5933b13790be4b2c425dfd163e578cd709)
+  
+11. Consistent variable naming
+  -> Ensure consistent naming convention used across all classes (https://github.com/full-of-foo/student-timetable/commit/7280eeaadb571830d90c3054a7ddabc9e4b2045a)
+  
+12. Comment classes
+  -> Adding JSE standard commenting ()

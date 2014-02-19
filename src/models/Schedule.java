@@ -1,6 +1,12 @@
 package models;
 import utils.ScheduleArrayList;
 
+/**
+ * Schedule --- POJO that represents a 
+ * persistent Schedule entity.
+ * 
+ * @author      Anthony Troy
+ */
 public class Schedule {	
 	private String name;
 	private int credits;

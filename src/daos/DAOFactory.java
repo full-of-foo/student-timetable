@@ -1,5 +1,11 @@
 package daos;
 
+/**
+ * DAOFactory --- Basic factory that 
+ * returns DAO subclass instances
+ *   
+ * @author       Anthony Troy
+ */
 public class DAOFactory {
 	
 	public static CourseDao getCourseDao() {

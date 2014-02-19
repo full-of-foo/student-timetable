@@ -1,5 +1,10 @@
 package models;
 
+/**
+ * Course --- POJO that represents a course entity.
+ * 
+ * @author    Anthony Troy
+ */
 public class Course {
 	private String name;
 	private int credits;

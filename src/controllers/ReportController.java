@@ -4,9 +4,16 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import models.Report;
-import utils.ScheduleReportWritter;
+import utils.ScheduleReportWriter;
 import views.ReportView;
 
+/**
+ * ReportController --- Controller that
+ * mediates actions between reportViews
+ * and reportModels
+ * 
+ * @author       Anthony Troy
+ */
 public class ReportController {
 	private ReportView view;
 	private Report report;
@@ -19,11 +26,18 @@ public class ReportController {
 	}
 
 	
+	/**
+	 * GenerateReportListener --- ActionListener 
+	 * implementation which handles the view's
+	 * response to button actions
+	 * 
+	 * @author       Anthony Troy
+	 */
 	class GenerateReportListener implements ActionListener {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			StringBuffer buffer = ScheduleReportWritter.writeReport(new StringBuffer());
+			StringBuffer buffer = ScheduleReportWriter.writeReport(new StringBuffer());
 			
 			report.setReportStringBuffer(buffer);	
 			view.getReportLabel().setText(report.toString());

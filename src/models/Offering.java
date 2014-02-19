@@ -1,16 +1,27 @@
 package models;
 
+/**
+ * Offering --- POJO that represents an offering entity.
+ * 
+ * @author      Anthony Troy
+ */
 public class Offering {
 	private int id;
 	private Course course;
 	private String daysTimes;
 
+	/**
+	 * Persistent Offering entity
+	 */
 	public Offering(int id, Course course, String daysTimes) {
 		this.setId(id);;
 		this.setCourse(course);
 		this.setDaysTimes(daysTimes);
 	}
-	
+
+	/**
+	 * Non-persistent Offering entity
+	 */
 	public Offering(Course course, String daysTimes) {
 		this.course = course;
 		this.daysTimes = daysTimes;
@@ -19,7 +30,7 @@ public class Offering {
 	public int getId() {
 		return id;
 	}
-	
+
 	public void setId(int id) {
 		this.id = id;
 	}
@@ -27,7 +38,7 @@ public class Offering {
 	public Course getCourse() {
 		return course;
 	}
-	
+
 	public void setCourse(Course course) {
 		this.course = course;
 	}
@@ -35,7 +46,7 @@ public class Offering {
 	public String getDaysTimes() {
 		return daysTimes;
 	}
-	
+
 	public void setDaysTimes(String daysTimes) {
 		this.daysTimes = daysTimes;
 	}

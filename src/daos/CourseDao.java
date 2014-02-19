@@ -7,6 +7,12 @@ import java.sql.Statement;
 import models.Course;
 import utils.DatabaseConnection;
 
+/**
+ * CourseDao --- BaseDao subclass that
+ * implements CRUDs on Course models
+ *   
+ * @author       Anthony Troy
+ */
 public class CourseDao extends BaseDao {
 	private Course course;
 

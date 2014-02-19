@@ -9,10 +9,28 @@ import daos.OfferingDao;
 import daos.ScheduleDao;
 import junit.framework.TestCase;
 
+/**
+ * BaseTest --- test superclass
+ * to share variables global to 
+ * tests and before/after
+ * test hooks
+ * 
+ * @author       Anthony Troy
+ */
 public class BaseTest extends TestCase {
 	protected CourseDao courseDao = DAOFactory.getCourseDao();
 	protected OfferingDao offeringDao = DAOFactory.getOfferingDao();
 	protected ScheduleDao scheduleDao = DAOFactory.getScheduleDao();
+	
+	protected void beforeCase(boolean isSeeded) {
+		beforeCase();
+		if(isSeeded) seedData();
+	}
+	
+	protected void beforeCase() {
+		dropTables();
+		createTables();
+	}
 	
 	private void createTables() {
 		courseDao.createTable();
@@ -42,18 +60,6 @@ public class BaseTest extends TestCase {
 		s2.getScheduleList().addOffering(off1);
 		scheduleDao.update(s2);
 	}
-	
-	protected void beforeCase(boolean isSeeded) {
-		beforeCase();
-		if(isSeeded) seedData();
-	}
-	
-	protected void beforeCase() {
-		dropTables();
-		createTables();
-	}
-	
-	
 	
 	public void testDummy(){
 		//dummy fall through test to be a valid TestClass child

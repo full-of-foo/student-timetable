@@ -10,6 +10,13 @@ import models.Course;
 import models.Offering;
 import models.Schedule;
 
+/**
+ * ScheduleArrayList --- ArrayList<Offering>
+ * subclass which encapsulates behavior for
+ * an offering/schedule list
+ *   
+ * @author       Anthony Troy
+ */
 @SuppressWarnings("serial")
 public class ScheduleArrayList extends ArrayList<Offering> {
 	private Schedule schedule;

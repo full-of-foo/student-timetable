@@ -10,6 +10,13 @@ import models.Offering;
 import models.Schedule;
 import utils.DatabaseConnection;
 
+/**
+ * ScheduleDao --- BaseDao subclass that
+ * implements CRUDs on Schedule models with
+ * the listing and deleting of Schedules
+ *   
+ * @author       Anthony Troy
+ */
 public class ScheduleDao extends BaseDao {
 	private Schedule schedule;
 
