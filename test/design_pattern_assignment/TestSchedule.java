@@ -1,38 +1,12 @@
 package design_pattern_assignment;
-import junit.framework.TestCase;
-
-import java.util.List;
 import java.util.Collection;
+import java.util.List;
 
-import daos.CourseDao;
-import daos.DAOFactory;
-import daos.OfferingDao;
-import daos.ScheduleDao;
 import models.Course;
 import models.Offering;
 import models.Schedule;
 
-public class TestSchedule extends TestCase {
-	private CourseDao courseDao = DAOFactory.getCourseDao();
-	private OfferingDao offeringDao = DAOFactory.getOfferingDao();
-	private ScheduleDao scheduleDao = DAOFactory.getScheduleDao();
-	
-	public TestSchedule(String name) {
-		super(name);
-	}
-	
-	private void createTables() throws Exception {
-		courseDao.createTable();
-		offeringDao.createTable();
-		scheduleDao.createTable();
-	}
-	
-	private void dropTables() throws Exception {
-		scheduleDao.dropTable();
-		offeringDao.dropTable();
-		courseDao.dropTable();
-	}
-
+public class TestSchedule extends BaseTest {
 
 	public void testMinCredits() {
 		Schedule schedule = new Schedule("name");
@@ -119,7 +93,7 @@ public class TestSchedule extends TestCase {
 		assertTrue(analysis.contains("Course overlap - F11"));
 	}
 
-	public void testCourseCreate() throws Exception {
+	public void testCourseCreate() {
 		courseDao.create(new Course("CS202", 1));
 		Course c = (Course) courseDao.find("CS202");
 		assertEquals("CS202", c.getName());
@@ -127,21 +101,21 @@ public class TestSchedule extends TestCase {
 		assertNull(c2);
 	}
 
-	public void testOfferingCreate() throws Exception {
+	public void testOfferingCreate() {
 		Course c = (Course) courseDao.create(new Course("CS202", 2));
 		Offering offering = (Offering) offeringDao.create(new Offering(c, "M10"));
 		assertNotNull(offering);
 	}
 
-	public void testPersistentSchedule() throws Exception {
+	public void testPersistentSchedule() {
 		scheduleDao.create(new Schedule("Bob"));
 		Schedule s = (Schedule) scheduleDao.find("bob");
 		assertNotNull(s);
 	}
 
-	public void testScheduleUpdate() throws Exception {
-		dropTables();
-		createTables();
+	public void testScheduleUpdate() {
+		beforeCase();
+
 		Course cs101 = (Course) courseDao.create(new Course("CS101", 3));
 		Offering off1 = (Offering) offeringDao.create(new Offering(cs101, "M10"));
 		offeringDao.update(off1);

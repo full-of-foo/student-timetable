@@ -29,3 +29,6 @@ Refactors Report
 9. Implement MVC pattern for generating reports
   -> Create Report controller and view, add reportLabel and generateReportButton to view and bind touchEvent to button which adds the reportText to the label 
   (https://github.com/full-of-foo/student-timetable/commit/cfea2b670e219497db1de3eed5fac105babb29b2)
+  
+10. Extract hierarchy for tests
+  -> Create 'BaseTest' superclass to encapsulate the creating, tearing of tables and seeding of data ()
