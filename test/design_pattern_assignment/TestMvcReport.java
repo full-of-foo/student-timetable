@@ -35,7 +35,7 @@ public class TestMvcReport extends BaseTest {
 		view.getGenerateReportBtn().doClick();
 		String text = view.getReportLabel().getText();
 		String valid = "Number of scheduled offerings: 0\n";
-		assertTrue(text.equals(valid) || text.equals(valid));
+		assertTrue(text.equals(valid));
 	}
 
 }
