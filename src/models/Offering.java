@@ -5,15 +5,15 @@ public class Offering {
 	private Course course;
 	private String daysTimes;
 
-	public Offering(int id, Course course, String daysTimesCsv) {
-		this.id = id;
-		this.course = course;
-		this.daysTimes = daysTimesCsv;
+	public Offering(int id, Course course, String daysTimes) {
+		this.setId(id);;
+		this.setCourse(course);
+		this.setDaysTimes(daysTimes);
 	}
 	
-	public Offering(Course course, String daysTimesCsv) {
+	public Offering(Course course, String daysTimes) {
 		this.course = course;
-		this.daysTimes = daysTimesCsv;
+		this.daysTimes = daysTimes;
 	}
 
 	public int getId() {

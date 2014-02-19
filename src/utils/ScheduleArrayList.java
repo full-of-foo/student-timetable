@@ -42,6 +42,7 @@ public class ScheduleArrayList extends ArrayList<Offering> {
 		return result;
 	}
 	
+    // does nothing?	
 	public void checkDuplicateCourses(ArrayList<String> analysis) {
 		HashSet<Course> courses = new HashSet<Course>();
 		for (int i = 0; i < this.size(); i++) {
@@ -52,6 +53,7 @@ public class ScheduleArrayList extends ArrayList<Offering> {
 		}
 	}
 	
+	// does nothing?	
 	public void checkOverlap(ArrayList<String> analysis) {
 		HashSet<String> times = new HashSet<String>();
 		for (Iterator<Offering> iterator = this.iterator(); iterator.hasNext();) {

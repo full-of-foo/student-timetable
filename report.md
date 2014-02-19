@@ -19,3 +19,8 @@ Refactors Report
    
 6. Extract hierarchy for DAO
    -> Create 'BaseDAO' abstract class to dry up DAO crud code (https://github.com/full-of-foo/student-timetable/commit/e8460f7d5d3ebbc25c14c2d9d076f1a2694cbd7a)
+   
+7. Implement POJO pattern for models and define a ScheduleArrayList
+   -> Implement Course, Schedule and Offering as a POJO classes and extract Schedule list logic to an implementation of ArrayList (https://github.com/full-of-foo/student-timetable/commit/a9d9f080a759c24ebbce94b58c3c36cf9cd9519f)
+   
+8. ?
