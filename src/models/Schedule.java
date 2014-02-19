@@ -6,8 +6,8 @@ public class Schedule {
 	private int credits;
 	private ScheduleArrayList scheduleList;
 	private boolean permission = false;
-	public final int minCredits = 12;
-	public final int maxCredits = 18;
+	public static final int minCredits = 12;
+	public static final int maxCredits = 18;
 	
 	public Schedule(String name) {
 		this.setName(name);

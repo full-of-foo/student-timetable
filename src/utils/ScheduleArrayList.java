@@ -33,16 +33,15 @@ public class ScheduleArrayList extends ArrayList<Offering> {
 	
 	public List<String> analysis() {
 		ArrayList<String> result = new ArrayList<String>();
-		if (this.schedule.getCredits() < this.schedule.minCredits)
+		if (this.schedule.getCredits() < Schedule.minCredits)
 			result.add("Too few credits");
-		if (this.schedule.getCredits() > this.schedule.maxCredits && !this.schedule.isPermission())
+		if (this.schedule.getCredits() > Schedule.maxCredits && !this.schedule.isPermission())
 			result.add("Too many credits");
 		this.checkDuplicateCourses(result);
 		this.checkOverlap(result);
 		return result;
 	}
 	
-    // does nothing?	
 	public void checkDuplicateCourses(ArrayList<String> analysis) {
 		HashSet<Course> courses = new HashSet<Course>();
 		for (int i = 0; i < this.size(); i++) {
@@ -53,7 +52,6 @@ public class ScheduleArrayList extends ArrayList<Offering> {
 		}
 	}
 	
-	// does nothing?	
 	public void checkOverlap(ArrayList<String> analysis) {
 		HashSet<String> times = new HashSet<String>();
 		for (Iterator<Offering> iterator = this.iterator(); iterator.hasNext();) {
@@ -67,8 +65,6 @@ public class ScheduleArrayList extends ArrayList<Offering> {
 				times.add(dayTime);
 			}
 		}
-	}
-
-	
+	}	
 
 }

@@ -8,7 +8,6 @@ import utils.ScheduleReportWritter;
 import views.ReportView;
 
 public class ReportController {
-	
 	private ReportView view;
 	private Report report;
 	
@@ -24,8 +23,10 @@ public class ReportController {
 
 		@Override
 		public void actionPerformed(ActionEvent e) {
-			report.setReportStringBuffer(ScheduleReportWritter.writeReport(new StringBuffer()));	
-			view.getReportLabel().setText(report.getReportStringBuffer().toString());
+			StringBuffer buffer = ScheduleReportWritter.writeReport(new StringBuffer());
+			
+			report.setReportStringBuffer(buffer);	
+			view.getReportLabel().setText(report.toString());
 		}
 		
 	}

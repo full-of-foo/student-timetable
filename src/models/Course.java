@@ -5,8 +5,8 @@ public class Course {
 	private int credits;
 
 	public Course(String name, int credits) {
-		this.name = name;
-		this.credits = credits;
+		this.setName(name);
+		this.setCredits(credits);
 	}
 
 	public String getName() {

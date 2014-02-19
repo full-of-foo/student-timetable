@@ -6,7 +6,7 @@ import java.sql.Statement;
 import utils.DatabaseConnection;
 
 public abstract class BaseDao {
-	String tableName;
+	private String tableName;
 
 	public BaseDao(String tableName){
 		this.tableName = tableName;
@@ -19,8 +19,7 @@ public abstract class BaseDao {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
 			Statement stmt = conn.createStatement();
-			String sql = "DROP TABLE " + tableName + ";";
-			stmt.executeUpdate(sql);
+			stmt.executeUpdate("DROP TABLE " + tableName + ";");
 			stmt.close();
 			DatabaseConnection.getInstance().disconnect(); 
 		} 

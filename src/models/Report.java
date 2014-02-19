@@ -14,4 +14,8 @@ public class Report {
 	public void setReportStringBuffer(StringBuffer reportStringBuffer) {
 		this.reportStringBuffer = reportStringBuffer;
 	}
+	
+	public String toString(){
+		return reportStringBuffer.toString();
+	}
 }

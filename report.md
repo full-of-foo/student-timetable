@@ -31,4 +31,4 @@ Refactors Report
   (https://github.com/full-of-foo/student-timetable/commit/cfea2b670e219497db1de3eed5fac105babb29b2)
   
 10. Extract hierarchy for tests
-  -> Create 'BaseTest' superclass to encapsulate the creating, tearing of tables and seeding of data ()
+  -> Create 'BaseTest' superclass to encapsulate the creating, tearing of tables and seeding of data (https://github.com/full-of-foo/student-timetable/commit/d595db5933b13790be4b2c425dfd163e578cd709)

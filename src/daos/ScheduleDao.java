@@ -40,9 +40,9 @@ public class ScheduleDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule;");
-			statement.close();
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE FROM schedule;");
+			stmt.close();
 			DatabaseConnection.getInstance().disconnect(); 
 		} 
 		catch (Exception e) {
@@ -52,14 +52,12 @@ public class ScheduleDao extends BaseDao {
 
 	public Collection<Schedule> all() {
 		ArrayList<Schedule> result = new ArrayList<Schedule>();
-		Connection conn = null;
 		try {
 			DatabaseConnection.getInstance().connect();
-			conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			ResultSet results = statement.executeQuery("SELECT DISTINCT NAME FROM schedule;");
-			while (results.next())
-				result.add((Schedule) this.find(results.getString("NAME")));
+			Connection conn = DatabaseConnection.getInstance().getConnection();
+			Statement stmt = conn.createStatement();
+			ResultSet results = stmt.executeQuery("SELECT DISTINCT NAME FROM schedule;");
+			while (results.next()) result.add((Schedule) this.find(results.getString("NAME")));
 		} 
 		catch (Exception e) {
 			e.printStackTrace();
@@ -73,14 +71,13 @@ public class ScheduleDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + schedule.getName() + "';");
-			statement.executeUpdate("INSERT INTO schedule (NAME) VALUES ('" + schedule.getName() +"')");
-			statement.close();
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE FROM schedule WHERE name = '" + schedule.getName() + "';");
+			stmt.executeUpdate("INSERT INTO schedule (NAME) VALUES ('" + schedule.getName() +"')");
+			stmt.close();
 			DatabaseConnection.getInstance().disconnect(); 
 		} 
 		catch (Exception e) {
-			schedule = null;
 			e.printStackTrace();
 		}
 		return schedule;
@@ -92,19 +89,18 @@ public class ScheduleDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM schedule WHERE Name= '" + name + "';");
+			Statement stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery("SELECT * FROM schedule WHERE Name= '" + name + "';");
 			schedule = new Schedule(name);
 			while (result.next()) {
 				int offeringId = result.getInt("OFFERING_ID");
 				Offering offering = (Offering) DAOFactory.getOfferingDao().find(offeringId);
 				schedule.getScheduleList().addOffering(offering);
 			}
-			statement.close();
+			stmt.close();
 			DatabaseConnection.getInstance().disconnect(); 
 		} 
 		catch (Exception e) {
-			schedule = null;
 			e.printStackTrace();
 		} 
 		return schedule;
@@ -116,11 +112,11 @@ public class ScheduleDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM schedule WHERE name = '" + schedule.getName() + "';");
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE FROM schedule WHERE name = '" + schedule.getName() + "';");
 			for (int i = 0; i < schedule.getScheduleList().size(); i++) {
 				Offering offering = (Offering) schedule.getScheduleList().get(i);
-				statement.executeUpdate("INSERT INTO schedule (NAME, OFFERING_ID) VALUES('" + schedule.getName() + "','" + offering.getId() + "');");
+				stmt.executeUpdate("INSERT INTO schedule (NAME, OFFERING_ID) VALUES('" + schedule.getName() + "','" + offering.getId() + "');");
 			}
 		} 
 		catch (Exception e) {

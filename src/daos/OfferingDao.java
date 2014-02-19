@@ -40,15 +40,14 @@ public class OfferingDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("SELECT MAX(ID) FROM offering;");
+			Statement stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery("SELECT MAX(ID) FROM offering;");
 			result.next();
 			int newId = 1 + result.getInt(1);
 			offering = new Offering(newId, offering.getCourse(),  offering.getDaysTimes());
-			statement.executeUpdate("INSERT INTO offering VALUES ('"+ newId + "','" + offering.getCourse().getName() + "','" + offering.getDaysTimes() + "');");
+			stmt.executeUpdate("INSERT INTO offering VALUES ('"+ offering.getId() + "','" + offering.getCourse().getName() + "','" + offering.getDaysTimes() + "');");
 		} 
 		catch (Exception e) {
-			newObject = null;
 			e.printStackTrace();
 		}
 		return offering;
@@ -60,13 +59,13 @@ public class OfferingDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM offering WHERE ID =" + id + ";");
-			if (result.next() == false)
-				return null;
+			Statement stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery("SELECT * FROM offering WHERE ID =" + id + ";");
+			if (result.next() == false) return null;
+			
 			String courseName = result.getString("COURSE_NAME");
-			Course course = (Course) DAOFactory.getCourseDao().find(courseName);
 			String dateTime = result.getString("DAYSTIMES");
+			Course course = (Course) DAOFactory.getCourseDao().find(courseName);
 			DatabaseConnection.getInstance().disconnect();
 			offering = new Offering(id, course, dateTime);
 		} 
@@ -82,9 +81,9 @@ public class OfferingDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM Offering WHERE ID=" + offering.getId() + ";");
-			statement.executeUpdate("INSERT INTO Offering VALUES('" + offering.getId() + "','" + offering.getCourse().getName() + "','" + offering.getDaysTimes() + "');");
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE FROM Offering WHERE ID=" + offering.getId() + ";");
+			stmt.executeUpdate("INSERT INTO Offering VALUES('" + offering.getId() + "','" + offering.getCourse().getName() + "','" + offering.getDaysTimes() + "');");
 		}
 		catch (Exception e) {
 			e.printStackTrace();

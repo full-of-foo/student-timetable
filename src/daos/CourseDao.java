@@ -37,12 +37,11 @@ public class CourseDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM course WHERE NAME = '" + course.getName() + "';");
-			statement.executeUpdate("INSERT INTO course VALUES ('" + course.getName() + "', '" + course.getCredits() + "');");
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE FROM course WHERE NAME = '" + course.getName() + "';");
+			stmt.executeUpdate("INSERT INTO course VALUES ('" + course.getName() + "', '" + course.getCredits() + "');");
 		} 
 		catch (Exception e) {
-			course = null;
 			e.printStackTrace();
 		}
 		return course;
@@ -55,8 +54,8 @@ public class CourseDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			ResultSet result = statement.executeQuery("SELECT * FROM course WHERE NAME = '" + name + "';");
+			Statement stmt = conn.createStatement();
+			ResultSet result = stmt.executeQuery("SELECT * FROM course WHERE NAME = '" + name + "';");
 			if (!result.next()) return null;
 			int credits = result.getInt("CREDITS");
 			DatabaseConnection.getInstance().disconnect();
@@ -74,10 +73,10 @@ public class CourseDao extends BaseDao {
 		try {
 			DatabaseConnection.getInstance().connect();
 			Connection conn = DatabaseConnection.getInstance().getConnection();
-			Statement statement = conn.createStatement();
-			statement.executeUpdate("DELETE FROM COURSE WHERE name = '" + course.getName() + "';");
-			statement.executeUpdate("INSERT INTO course VALUES('" + course.getName() + "','" + course.getCredits() + "');");
-			statement.close();
+			Statement stmt = conn.createStatement();
+			stmt.executeUpdate("DELETE FROM COURSE WHERE name = '" + course.getName() + "';");
+			stmt.executeUpdate("INSERT INTO course VALUES('" + course.getName() + "','" + course.getCredits() + "');");
+			stmt.close();
 		} 
 
 		catch (Exception e) {
